@@ -70,20 +70,20 @@ Ensure that the script is correctly configured to fetch the desired RSS feeds.
 The script stores the scraped news articles in a file named `news_data.json`. Ensure you have write permissions in the directory where the script is executed.
 
 ## Additional 
-- **Concurrent Requests:**  
+- Concurrent Requests:  
   Instead of fetching each feed one by one, we gather all `fetch_rss` coroutines into a list and run them together:
   ```python
   tasks = [fetch_rss(session, feed) for feed in rss_feeds]
   await asyncio.gather(*tasks)```
 This way, while one feed is waiting for a response, others are already in progress.
 
-Non-Blocking I/O:
+- Non-Blocking I/O:
 aiohttp releases control to the event loop whenever it’s waiting (DNS lookup, TCP handshake, server response, etc.), so no time is wasted idly blocking on network operations.
 
-Per-Feed Timeouts & Error Handling:
+- Per-Feed Timeouts & Error Handling:
 Each request uses its own 20-second timeout and is wrapped in try/except. A slow or unreachable RSS URL won’t hold up the entire run—you’ll still collect from the other feeds.
 
-Easy Scaling:
+- Easy Scaling:
 To add more sources, simply append to the rss_feeds list. The same async loop automatically handles any number of feeds without extra threads or processes.
 
-By using asyncio + aiohttp in this way, the script spends most of its time actively downloading XML, rather than waiting on each feed in turn—resulting in much faster overall execution and cleaner, more maintainable code.
+- By using asyncio + aiohttp in this way, the script spends most of its time actively downloading XML, rather than waiting on each feed in turn—resulting in much faster overall execution and cleaner, more maintainable code.
