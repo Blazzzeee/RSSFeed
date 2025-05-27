@@ -1,9 +1,4 @@
 # RSSFeed
-Certainly! Here's a comprehensive `README.md` template tailored for the [RSSFeed repository by Blazzzeee](https://github.com/Blazzzeee/RSSFeed), including sections on installing dependencies and running the script.
-
----
-
-# RSSFeed
 
 A Python script to scrape and store news articles from RSS feeds.
 
